@@ -119,13 +119,13 @@ class _AnimSearchBarState extends State<AnimSearchBar>
       ///Using Animated container to expand and shrink the widget
       child: AnimatedContainer(
         duration: Duration(milliseconds: widget.animationDurationInMilli),
-        height: 48.0,
-        width: (toggle == 0) ? 48.0 : widget.width,
+        height: widget.size,
+        width: (toggle == 0) ? widget.size : 48.0,
         curve: Curves.easeOut,
         decoration: BoxDecoration(
           /// can add custom color or the color will be white
-          color: widget.color,
-          borderRadius: BorderRadius.circular(30.0),
+          color: toggle == 0 ? widget.color : widget.openSearchColor,
+          borderRadius: BorderRadius.circular(widget.size + 1),
           boxShadow: [
             BoxShadow(
               color: Colors.black26,
@@ -150,7 +150,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                   padding: EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     /// can add custom color or the color will be white
-                    color: widget.color,
+                    color: toggle == 0 ? widget.color : widget.openSearchColor,
                     borderRadius: BorderRadius.circular(widget.size + 10),
                   ),
                   child: AnimatedBuilder(
