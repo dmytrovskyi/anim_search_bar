@@ -250,62 +250,59 @@ class _AnimSearchBarState extends State<AnimSearchBar>
             ),
 
             ///Using material widget here to get the ripple effect on the prefix icon
-            Visibility(
-              visible: toggle != 1,
-              child: Material(
-                /// can add custom color or the color will be white
-                color: widget.color,
-                borderRadius: BorderRadius.circular(widget.size + 10),
-                child: IconButton(
-                  splashRadius: widget.size - 1,
+            Material(
+              /// can add custom color or the color will be white
+              color: toggle == 0 ? widget.color : widget.openSearchColor,
+              borderRadius: BorderRadius.circular(widget.size + 10),
+              child: IconButton(
+                splashRadius: widget.size - 1,
 
-                  ///if toggle is 1, which means it's open. so show the back icon, which will close it.
-                  ///if the toggle is 0, which means it's closed, so tapping on it will expand the widget.
-                  ///prefixIcon is of type Icon
-                  icon: widget.prefixIcon != null
-                      ? toggle == 1
-                          ? Icon(Icons.arrow_back_ios, color: widget.openSearchTextColor,)
-                          : widget.prefixIcon!
-                      : Icon(
-                          toggle == 1 ? Icons.arrow_back_ios : Icons.search,
-                          color: toggle == 1 ? widget.openSearchTextColor : widget.textColor,
-                          size: widget.size,
-                        ),
-                  onPressed: () {
-                    setState(
-                      () {
-                        ///if the search bar is closed
-                        if (toggle == 0) {
+                ///if toggle is 1, which means it's open. so show the back icon, which will close it.
+                ///if the toggle is 0, which means it's closed, so tapping on it will expand the widget.
+                ///prefixIcon is of type Icon
+                icon: widget.prefixIcon != null
+                    ? toggle == 1
+                        ? Icon(Icons.arrow_back_ios, color: widget.openSearchTextColor,)
+                        : widget.prefixIcon!
+                    : Icon(
+                        toggle == 1 ? Icons.arrow_back_ios : Icons.search,
+                        color: toggle == 1 ? widget.openSearchTextColor : widget.textColor,
+                        size: widget.size,
+                      ),
+                onPressed: () {
+                  setState(
+                    () {
+                      ///if the search bar is closed
+                      if (toggle == 0) {
 
-                          if (widget.onOpen != null) {
-                            widget.onOpen!();
-                          }
-
-                          toggle = 1;
-                          setState(() {
-                            ///if the autoFocus is true, the keyboard will pop open, automatically
-                            if (widget.autoFocus)
-                              FocusScope.of(context).requestFocus(focusNode);
-                          });
-
-                          ///forward == expand
-                          _con.forward();
-                        } else {
-                          ///if the search bar is expanded
-                          toggle = 0;
-
-                          ///if the autoFocus is true, the keyboard will close, automatically
-                          setState(() {
-                            if (widget.autoFocus) unfocusKeyboard();
-                          });
-
-                          ///reverse == close
-                          _con.reverse();
+                        if (widget.onOpen != null) {
+                          widget.onOpen!();
                         }
-                      },
-                    );
-                  },
-                ),
+
+                        toggle = 1;
+                        setState(() {
+                          ///if the autoFocus is true, the keyboard will pop open, automatically
+                          if (widget.autoFocus)
+                            FocusScope.of(context).requestFocus(focusNode);
+                        });
+
+                        ///forward == expand
+                        _con.forward();
+                      } else {
+                        ///if the search bar is expanded
+                        toggle = 0;
+
+                        ///if the autoFocus is true, the keyboard will close, automatically
+                        setState(() {
+                          if (widget.autoFocus) unfocusKeyboard();
+                        });
+
+                        ///reverse == close
+                        _con.reverse();
+                      }
+                    },
+                  );
+                },
               ),
             ),
           ],
